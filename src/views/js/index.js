@@ -1,6 +1,6 @@
 const socket = io()
 
-const checkSocketStatus = () => {
+/* const checkSocketStatus = () => {
     console.log('Estado del socket:', socket.connected)
 }
 
@@ -24,4 +24,18 @@ socket.io.on('reconnect_attempt', () => {
 
 socket.io.on('reconnect', () => {
     console.log('Me he vuelto a conectar')
+}) */
+
+socket.on('welcome', (data) => {
+    const text = document.querySelector('#text')
+    text.textContent = data
+})
+
+const emitToServer = document.querySelector('#emit-to-server')
+emitToServer.addEventListener('click', () => {
+    socket.emit('server', 'Hola, Servidor')
+})
+
+socket.on('everyone', (message) => {
+    console.log(message)
 })

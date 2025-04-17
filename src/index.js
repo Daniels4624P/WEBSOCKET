@@ -15,8 +15,8 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     
-    // console.log('Clientes conectados:', io.engine.clientsCount)
-    // console.log("ID del socket conectado:", socket.id)
+    /* console.log('Clientes conectados:', io.engine.clientsCount)
+   console.log("ID del socket conectado:", socket.id)
 
     socket.on("disconnect", () => {
         console.log("El cliente", socket.id, "se ha desconectado")
@@ -24,7 +24,19 @@ io.on('connection', (socket) => {
 
     socket.conn.once('upgrade', () => {
         console.log('Hemos pasado de HTTP-Long-Polling a:', socket.conn.transport.name)
+    }) */
+
+    // EMISION BASICA
+
+    socket.emit('welcome', 'Ahora estas conectado.')
+
+    socket.on('server', (data) => {
+        console.log(data)
     })
+
+    // EMISION A TODOS LOS USERS
+
+    io.emit('everyone', socket.id + " Se ha conectado.")
 })
 
 httpServer.listen(3000)
