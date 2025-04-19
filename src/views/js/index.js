@@ -39,3 +39,31 @@ emitToServer.addEventListener('click', () => {
 socket.on('everyone', (message) => {
     console.log(message)
 })
+
+const emitToLast = document.querySelector('#emit-to-last')
+emitToLast.addEventListener('click', () => {
+    socket.emit('last', 'Hola')
+})
+
+socket.on('salute', (message) => {
+    console.log(message)
+})
+
+// on, once y off
+socket.on('on', () => {
+    console.log('Podemos escuchar un evento varias veces')
+})
+
+socket.once('once', () => {
+    console.log('Podemos escuchar un evento una sola vez')
+})
+
+const listener = () => {
+    console.log('Se apaga el evento que pongamos')
+}
+
+socket.on('off', listener)
+
+setTimeout(() => {
+    socket.off('off', listener)
+}, 2000)

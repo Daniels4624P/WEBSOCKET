@@ -9,6 +9,8 @@ const io = new Server(httpServer)
 
 app.use(express.static(path.join(__dirname, "views")))
 
+const socketsOnline = []
+
 app.get('/', (req, res) => {
     return res.sendFile(__dirname + "/views/index.html")
 })
@@ -27,6 +29,7 @@ io.on('connection', (socket) => {
     }) */
 
     // EMISION BASICA
+    socketsOnline.push(socket.id)
 
     socket.emit('welcome', 'Ahora estas conectado.')
 
@@ -37,6 +40,27 @@ io.on('connection', (socket) => {
     // EMISION A TODOS LOS USERS
 
     io.emit('everyone', socket.id + " Se ha conectado.")
+
+    // EMISION A UNO SOLO
+
+    socket.on('last', (message) => {
+        const lastSocket = socketsOnline[socketsOnline.length - 1]
+
+        io.to(lastSocket).emit('salute', message)
+    })
+
+    // on, once y off
+    socket.emit('on', 'Podemos escuchar un evento varias veces')
+    socket.emit('on', 'Podemos escuchar un evento varias veces')
+    
+    socket.emit('once', 'Podemos escuchar un evento una sola vez')
+    socket.emit('once', 'Podemos escuchar un evento una sola vez')
+
+    socket.emit('off', 'Se apaga el evento que pongamos')
+
+    setTimeout(() => {
+        socket.emit('off', 'Se apaga el evento que pongamos')
+    }, 3000)
 })
 
 httpServer.listen(3000)
