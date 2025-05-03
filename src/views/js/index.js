@@ -1,4 +1,4 @@
-// const socket = io()
+const socket = io()
 
 /* const checkSocketStatus = () => {
     console.log('Estado del socket:', socket.connected)
@@ -69,7 +69,7 @@ setTimeout(() => {
 }, 2000) */
 
     // Eventos Volatiles y Broadcast
-/* const circle = document.querySelector('#circle')
+const circle = document.querySelector('#circle')
 
 const dragCircle = (position) => {
     circle.style.top = position.top
@@ -97,7 +97,7 @@ document.addEventListener('mouseup', (e) => {
 
 socket.on('moveCircle', (position) => {
     dragCircle(position)
-})*/
+})
     // Salas
 /* const connectRoom1 = document.querySelector('#connectRoom1')
 const connectRoom2 = document.querySelector('#connectRoom2')
@@ -191,7 +191,7 @@ reconnect.addEventListener('click', () => {
 }) */
 
     // Middleware
-const socket = io({
+/* const socket = io({
     auth: {
         token: "Mr. Michi Es Genial"
     }
@@ -203,4 +203,4 @@ socket.on('connect_error', (err) => {
     console.log('Error de conexion')
     console.log(err.message)
     console.log(err.data.details)
-})
+}) */
