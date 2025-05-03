@@ -15,7 +15,15 @@ app.get('/', (req, res) => {
     return res.sendFile(__dirname + "/views/index.html")
 })
 
-const teachers = io.of('teachers')
+    // Manejo Offline
+/* io.on('connection', (socket) => {
+    socket.on('is connected', (message) => {
+        console.log(message)
+    })
+}) */
+
+    // Namespaces
+/* const teachers = io.of('teachers')
 const students = io.of('students')
 
 teachers.on('connection', (socket) => {
@@ -30,9 +38,9 @@ students.on('connection', (socket) => {
     socket.on('sendMessage', (data) => {
         students.emit('message', data)
     })
-})
+}) */
 
-// io.on('connection', (socket) => {
+io.on('connection', (socket) => {
     
     /* console.log('Clientes conectados:', io.engine.clientsCount)
    console.log("ID del socket conectado:", socket.id)
@@ -79,9 +87,9 @@ students.on('connection', (socket) => {
         socket.emit('off', 'Se apaga el evento que pongamos')
     }, 3000) */
 
-    // socket.on('circlePosition', (positions) => {
-    //     socket.broadcast.emit('moveCircle', positions) // broadcast emite un mensaje para todos excepto para ti en comparacion con io.emit que emite para todos un mensaje
-    // })
+    socket.on('circlePosition', (positions) => {
+         socket.broadcast.emit('moveCircle', positions) // broadcast emite un mensaje para todos excepto para ti en comparacion con io.emit que emite para todos un mensaje
+    })
 
     /* socket.connectedRoom = ""
 
@@ -112,7 +120,25 @@ students.on('connection', (socket) => {
             message,
             room
         })
-    }) */  
-// })
+    }) */
+    
+        // Middlewares
+/* io.use((socket, next) => {
+    const token = socket.handshake.auth.token
+    if (token ==  "Mr. Michi Es Genial") {
+        next()
+    } else {
+        const err = new Error('No estas autorizado')
+        err.data = {
+            datails: "No pudiste ser autenticado"
+        }
+        next(err)
+    }
+})
+
+io.on('connection', (socket) => {
+    console.log(socket.id)
+}) */
+})
 
 httpServer.listen(3000)

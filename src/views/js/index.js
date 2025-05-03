@@ -49,7 +49,7 @@ socket.on('salute', (message) => {
     console.log(message)
 })
 
-// on, once y off
+    // on, once y off
 socket.on('on', () => {
     console.log('Podemos escuchar un evento varias veces')
 })
@@ -68,6 +68,7 @@ setTimeout(() => {
     socket.off('off', listener)
 }, 2000) */
 
+    // Eventos Volatiles y Broadcast
 /* const circle = document.querySelector('#circle')
 
 const dragCircle = (position) => {
@@ -82,7 +83,8 @@ const drag = (e) => {
     }
 
     dragCircle(position)
-    socket.emit('circlePosition', position)
+    console.log('Se envia el evento al servidor')
+    socket.volatile.emit('circlePosition', position)
 }
 
 document.addEventListener('mousedown', (event) => {
@@ -95,8 +97,8 @@ document.addEventListener('mouseup', (e) => {
 
 socket.on('moveCircle', (position) => {
     dragCircle(position)
-}) */
-
+})*/
+    // Salas
 /* const connectRoom1 = document.querySelector('#connectRoom1')
 const connectRoom2 = document.querySelector('#connectRoom2')
 const connectRoom3 = document.querySelector('#connectRoom3')
@@ -128,7 +130,8 @@ socket.on('send message', (data) => {
     document.querySelector(`#${room}`).append(li)
 }) */
 
-const user = prompt('Escribe tu usuario');
+    // Namespaces
+/* const user = prompt('Escribe tu usuario');
 
 const profes = ['Retax', 'juandc', 'GNDX'];
 
@@ -164,4 +167,40 @@ socketNamespace.on('message', (data) => {
     const li = document.createElement('li')
     li.textContent = `${user}: ${message}`;
     chat.append(li)
+}) */
+
+    // Manejo Offline
+/* const socket = io()
+
+const send = document.querySelector('#send')
+const reconnect = document.querySelector('#connect')
+const disconnect = document.querySelector('#disconnect')
+
+send.addEventListener('click', () => {
+    if (socket.connected) {
+        socket.emit('is connected', "!Esta conectado!")
+    }
+})
+
+disconnect.addEventListener('click', () => {
+    socket.disconnect()
+})
+
+reconnect.addEventListener('click', () => {
+    socket.connect()
+}) */
+
+    // Middleware
+const socket = io({
+    auth: {
+        token: "Mr. Michi Es Genial"
+    }
+})
+
+// En caso de error en el middleware
+
+socket.on('connect_error', (err) => {
+    console.log('Error de conexion')
+    console.log(err.message)
+    console.log(err.data.details)
 })
