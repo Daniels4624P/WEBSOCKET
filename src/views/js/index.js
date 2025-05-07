@@ -83,7 +83,6 @@ const drag = (e) => {
     }
 
     dragCircle(position)
-    console.log('Se envia el evento al servidor')
     socket.volatile.emit('circlePosition', position)
 }
 
